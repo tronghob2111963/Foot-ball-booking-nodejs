@@ -1,0 +1,217 @@
+components:
+  schemas:
+    Field:
+      type: object
+      properties:
+        field_id:
+          type: integer
+          readOnly: true
+        field_name:
+          type: string
+          maxLength: 255
+          description: Name of the field
+        type_fields:
+          type: string
+          maxLength: 255
+          description: Type of the field
+
+        price_per_hour:
+          type: number
+          format: float
+          description: Price per hour for using the field
+        image_url:
+          type: string
+          readOnly: true
+          description: contact avater file path
+        image_urlFile:
+          type: string
+          format: binary
+          writenly: true
+          description: contact avatar file
+        status:
+          type: string
+          maxLength: 100
+          default: "available"
+          description: Current status of the field
+    Admin:
+      type: object
+      properties:
+        admin_id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+          description: Name of the admin
+        password:
+          type: string
+          maxLength: 255
+          description: Password of the admin
+        image_url:
+          type: string
+          readOnly: true
+          description: admin avater file path
+        image_urlFile:
+          type: string
+          format: binary
+          writenly: true
+          description: admin avatar file
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          readOnly: true
+          description: ID of the user
+        name:
+          type: string
+          maxLength: 255
+          description: Name of the user
+        email:
+          type: string
+          maxLength: 255
+          description: Email of the user
+        password:
+          type: string
+          maxLength: 255
+          description: Password of the user
+        phone:
+          type: string
+          maxLength: 255
+          description: Phone number of the user
+        image_url:
+          type: string
+          readOnly: true
+          description: user avater file path
+        image_urlFile:
+          type: string
+          format: binary
+          writenly: true
+          description: user avatar file
+    Item:
+      type: object
+      properties:
+        items_id:
+          type: integer
+          readOnly: true
+          description: ID of the user
+        item_name:
+          type: string
+          description: name of the item
+        price:
+          type: number
+          format: float
+          description: Price per hour for using the field
+        stock:
+          type: integer
+          maxLength: 11
+          description: stock of the item
+        image_url:
+          type: string
+          readOnly: true
+          description: user avater file path
+        image_urlFile:
+          type: string
+          format: binary
+          writenly: true
+          description: user avatar file
+
+    PaginationMetadata:
+      type: object
+      properties:
+        totalRecords:
+          type: integer
+          default: 0
+          description: The total number of records
+        firstPage:
+          type: integer
+          default: 1
+          description: The first page
+        lastPage:
+          type: integer
+          default: 1
+          description: The last page
+        page:
+          type: integer
+          default: 1
+          description: The current page
+        limit:
+          type: integer
+          default: 5
+          description: The number pf records per page
+    securitySchemes:
+      Bearer:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+  responses:
+    "200NoData":
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: The response status
+                enum:
+                  - success
+                data:
+                  type: object
+                  nullable: true
+                  default: null
+                  description: The response data
+
+  parameters:
+    fieldsIdParam:
+      name: field_id
+      description: fields ID
+      required: true
+      in: path
+      schema:
+        type: integer
+
+    adminIdParam:
+      name: admin_id
+      description: admin ID
+      required: true
+      in: path
+      schema:
+        type: integer
+
+    userIdParam:
+      name: user_id
+      description: user ID
+      required: true
+      in: path
+      schema:
+        type: integer
+
+    itemIdParam:
+      name: items_id
+      description: item id
+      required: true
+      in: path
+      schema:
+        type: integer
+
+    limitParam:
+      name: limit
+      description: Number of records per page
+      in: query
+      schema:
+        type: integer
+        default: 5
+        minimum: 1
+        maximum: 100
+      required: false
+
+    pageParam:
+      name: page
+      description: Page number of records
+      in: query
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+      required: false
